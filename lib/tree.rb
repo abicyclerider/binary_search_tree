@@ -1,19 +1,20 @@
 require_relative './node'
 
-def Tree
+class Tree
+  attr_reader :root
   def initialize(array)
     @root = build_tree(array.sort.uniq)
   end
 
   def build_tree(array)
-    return if array.empty?
-
-    middle_index = array.empty? ? nil : array.length / 2
-
-    node = Node.new(array[middle_index])
-    node.left = build_tree(array[..middle_index - 1])
-    node.right = build_tree(array[middle_index + 1..])
-    
+    if array.empty?
+      return
+    elsif array.length == 1
+      node = Node.new(array[0])
+    else
+      middle_index = array.empty? ? nil : array.length / 2
+      node = Node.new(array[middle_index], build_tree(array[..middle_index - 1]), build_tree(array[middle_index + 1..]))
+    end
     node
   end
 
