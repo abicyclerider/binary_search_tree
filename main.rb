@@ -8,3 +8,5 @@ tree = Tree.new(array)
 tree.pretty_print
 tree.insert(21)
 tree.pretty_print
+tree.insert(-1)
+tree.pretty_print
