@@ -6,5 +6,5 @@ tree = Tree.new(array)
 
 
 tree.pretty_print
-#p tree.root.left
-#p tree.root.right
+tree.insert(21)
+tree.pretty_print
