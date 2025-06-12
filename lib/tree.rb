@@ -24,8 +24,11 @@ class Tree
     else 
       next_node = node.left
     end
-    if next_node == nil
+    if next_node == nil && value > node.data
       node.right = Node.new(value)
+      return
+    elsif next_node == nil && value <= node.data
+      node.left = Node.new(value)
       return
     else
       insert(value, next_node)
