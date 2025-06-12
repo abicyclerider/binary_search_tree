@@ -21,8 +21,10 @@ class Tree
   def insert(value, node = @root)
     if value > node.data 
       next_node = node.right
-    else 
+    elsif value < node.data 
       next_node = node.left
+    else 
+      return
     end
     if next_node == nil && value > node.data
       node.right = Node.new(value)
@@ -33,6 +35,34 @@ class Tree
     else
       insert(value, next_node)
     end
+  end
+
+  def delete(value, root)
+    return if node.nil? 
+
+    if root.data > value
+      root.left = delete(value, root.left) 
+    
+    elsif root.data < value
+      root.right = delete(value, root.right)
+    
+    else
+      return root.right if root.left.nil?
+      return root.left if root.right.nil?
+      if root.left && root.right
+        successor = get_successor(root)
+        root.data = successor.data
+        root.right = delete(successor.data, root.right)
+      end
+
+  end
+
+  def get_successor(curr)
+    return nil if curr.nil? || curr.right.nil?
+
+    curr = curr.right
+    curr = curr.left until curr.left.nil?
+    curr  
   end
 
   def pretty_print(node = @root, prefix = '', is_left = true)

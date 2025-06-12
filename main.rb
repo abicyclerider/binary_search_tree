@@ -10,3 +10,5 @@ tree.insert(21)
 tree.pretty_print
 tree.insert(-1)
 tree.pretty_print
+tree.insert(4)
+tree.pretty_print
