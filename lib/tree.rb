@@ -37,8 +37,8 @@ class Tree
     end
   end
 
-  def delete(value, root)
-    return if node.nil? 
+  def delete(value, root=@root)
+    return if root.nil? 
 
     if root.data > value
       root.left = delete(value, root.left) 
@@ -49,12 +49,13 @@ class Tree
     else
       return root.right if root.left.nil?
       return root.left if root.right.nil?
-      if root.left && root.right
-        successor = get_successor(root)
-        root.data = successor.data
-        root.right = delete(successor.data, root.right)
-      end
+      
+      successor = get_successor(root)
+      root.data = successor.data
+      root.right = delete(successor.data, root.right)
+    end
 
+    root
   end
 
   def get_successor(curr)
@@ -65,11 +66,31 @@ class Tree
     curr  
   end
 
+  def find(value, node=@root)
+    return nil if node.nil?
+    return node if value == node.data
+
+    value > node.data ? find(value, node.right) : find(value, node.left)
+
+  end
+
   def pretty_print(node = @root, prefix = '', is_left = true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", false) if node.right
     puts "#{prefix}#{is_left ? '└── ' : '┌── '}#{node.data}"
     pretty_print(node.left, "#{prefix}#{is_left ? '    ' : '│   '}", true) if node.left
   end
 
+  def level_order(values = [], queue = [@root])
+    node = queue.pop
+    return if node.nil?
+    return values if queue.empty?
+
+    values << node.data
+    queue << node.left
+    queue << node.right
+
+    level_order(values, queue)
+
+  end
 
 end
