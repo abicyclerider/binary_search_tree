@@ -8,4 +8,4 @@ tree = Tree.new(array)
 
 tree.pretty_print
 
-p tree.depth(99)
+p tree.balanced?

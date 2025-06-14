@@ -147,4 +147,11 @@ class Tree
 
     value > node.data ? depth(value, node.right, node_depth + 1) : depth(value, node.left, node_depth + 1)
   end
+
+  def balanced?(root = @root)
+    return true if root.nil?
+    return false if (node_height(root.right) - node_height(root.left)).abs > 1
+
+    balanced(root.left) && balanced(root.right)
+  end
 end
