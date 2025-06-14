@@ -98,19 +98,53 @@ class Tree
     values
   end
 
-  # def inorder(values = [], queue, &block)
-  # end
+  def inorder(values = [], root = @root, &block)
+    return if root.nil?
+
+    inorder(values, root.left, &block)
+    values << (block_given? ? yield(root.data) : root.data)
+    inorder(values, root.right, &block)
+
+    values
+  end
 
   def preorder(values = [], root = @root, &block)
     return if root.nil?
 
-    values << (block_given? ? root.data : yield(root.data))
+    values << (block_given? ? yield(root.data) : root.data)
     preorder(values, root.left, &block)
     preorder(values, root.right, &block)
 
     values
   end
 
-  # def postorder(values = [], queue, &block)
-  # end
+  def postorder(values = [], root = @root, &block)
+    return if root.nil?
+
+    preorder(values, root.left, &block)
+    preorder(values, root.right, &block)
+    values << (block_given? ? yield(root.data) : root.data)
+
+    values
+  end
+
+  def node_height(node, distance = 0)
+    return distance if node.nil?
+
+    left_height = node_height(node.left, distance + 1)
+    right_height = node_height(node.right, distance + 1)
+
+    left_height > right_height ? left_height : right_height
+  end
+
+  def height(value)
+    node_height(find(value))
+  end
+
+  def depth(value, node = @root, node_depth = 0)
+    return nil if node.nil?
+    return node_depth if value == node.data
+
+    value > node.data ? depth(value, node.right, node_depth + 1) : depth(value, node.left, node_depth + 1)
+  end
 end
