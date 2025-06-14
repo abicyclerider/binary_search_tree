@@ -152,6 +152,13 @@ class Tree
     return true if root.nil?
     return false if (node_height(root.right) - node_height(root.left)).abs > 1
 
-    balanced(root.left) && balanced(root.right)
+    balanced?(root.left) && balanced?(root.right)
+  end
+
+  def rebalance!
+    return if balanced?
+
+    values = inorder
+    @root = build_tree(values)
   end
 end
